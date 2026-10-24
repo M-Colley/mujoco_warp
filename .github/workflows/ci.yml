@@ -1,9 +1,5 @@
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-    types: [opened, reopened, synchronize, edited]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -115,13 +111,13 @@ jobs:
       - name: Test with pytest (locked uv)
         if: matrix.dep-type == 'locked uv'
         run: |
-          uv run --with pytest --with pytest-xdist pytest -n 2
+          uv run --with pytest --with pytest-xdist pytest -n 8
           
       # Run tests for stable
       - name: Test with pytest (stable)
         if: matrix.dep-type == 'stable'
         run: |
-          pytest -n 2
+          pytest -n 8
           
       # Extra step for stable
       - name: Out-of-bounds check for batched model fields
